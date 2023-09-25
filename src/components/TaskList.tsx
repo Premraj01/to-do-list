@@ -25,10 +25,6 @@ const TaskList = ({ tasksList, deleteTask, updateTask, markAsImportant, markAsCo
         markAsCompleted({ ...task, isCompleted: !task.isCompleted })
     }
 
-
-
-
-
     return (
         <Fragment>
             {tasksList.map((task: any, i: number) => (
@@ -115,7 +111,7 @@ const TaskList = ({ tasksList, deleteTask, updateTask, markAsImportant, markAsCo
             <div
                 className="modal show"
                 style={{ display: 'block', position: 'initial' }}
-            > <Modal show={showDeleteDialogue} onHide={handleClose}>
+            > <Modal show={showDeleteDialogue} onHide={closeDeleteDialogue}>
                     <Modal.Header closeButton>
                         <Modal.Title>Confirmation </Modal.Title>
                     </Modal.Header>

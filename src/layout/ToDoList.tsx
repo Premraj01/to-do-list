@@ -9,7 +9,7 @@ import SearchTaskForm from '../components/SearchTaskForm'
 
 const ToDoList = () => {
 
-    const [taskList, setTaskList] = useLocalStorage('tasks-list', [])
+    let [taskList, setTaskList] = useLocalStorage('tasks-list', [])
 
     const addTask = (task: any) => {
         setTaskList((prevState: any) => [...prevState, task])
@@ -45,12 +45,19 @@ const ToDoList = () => {
         )))
     }
 
+    const searchTask = (query: any) => {
+        if (query.length >= 3) {
+            taskList = taskList.filter((task: any) => task.name.includes(query))
+            setTaskList([...taskList])
+        }
+    }
+
     return (
         <Container fluid='md'>
             <Row>
                 <Col>   <AddTaskForm addTask={addTask} /></Col>
                 <Col>
-                    <SearchTaskForm />
+                    <SearchTaskForm searchTask={searchTask} />
                 </Col>
             </Row>
             <TaskList tasksList={taskList} deleteTask={deleteTask} updateTask={updateTask} markAsImportant={markAsImportant} markAsCompleted={markAsCompleted} />
