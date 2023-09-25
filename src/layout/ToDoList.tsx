@@ -4,12 +4,15 @@ import TaskList from '../components/TaskList'
 import useLocalStorage from '../hooks/useLocalStorage'
 import AddTaskForm from '../components/AddTaskForm'
 import SearchTaskForm from '../components/SearchTaskForm'
+import { useState } from 'react'
 
 
 
 const ToDoList = () => {
 
     let [taskList, setTaskList] = useLocalStorage('tasks-list', [])
+    let [filteredTasks, setFilteredTasks] = useState<any>([])
+    let [query, setQuery] = useState<any>([])
 
     const addTask = (task: any) => {
         setTaskList((prevState: any) => [...prevState, task])
@@ -47,8 +50,9 @@ const ToDoList = () => {
 
     const searchTask = (query: any) => {
         if (query.length >= 3) {
-            taskList = taskList.filter((task: any) => task.name.includes(query))
-            setTaskList([...taskList])
+            setFilteredTasks(taskList.filter((task: any) => task.name.includes(query)))
+            setQuery(query)
+            console.log(filteredTasks);
         }
     }
 
@@ -60,7 +64,12 @@ const ToDoList = () => {
                     <SearchTaskForm searchTask={searchTask} />
                 </Col>
             </Row>
-            <TaskList tasksList={taskList} deleteTask={deleteTask} updateTask={updateTask} markAsImportant={markAsImportant} markAsCompleted={markAsCompleted} />
+            {
+                query.length > 1 ?
+                    <TaskList tasksList={filteredTasks} deleteTask={deleteTask} updateTask={updateTask} markAsImportant={markAsImportant} markAsCompleted={markAsCompleted} />
+                    : <TaskList tasksList={taskList} deleteTask={deleteTask} updateTask={updateTask} markAsImportant={markAsImportant} markAsCompleted={markAsCompleted} />
+
+            }
         </Container >
     )
 }
