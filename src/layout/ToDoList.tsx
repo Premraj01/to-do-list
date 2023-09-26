@@ -40,7 +40,7 @@ const ToDoList = () => {
         )))
     }
     const markAsCompleted = (task: any) => {
-        console.log(task);
+
         setTaskList((prevState: any) => prevState.map((t: any) => (
             t.id === task.id
                 ? { ...task, isCompleted: task.isCompleted }
@@ -52,7 +52,6 @@ const ToDoList = () => {
         if (query.length >= 3) {
             setFilteredTasks(taskList.filter((task: any) => task.name.includes(query)))
             setQuery(query)
-            console.log(filteredTasks);
         }
     }
 
